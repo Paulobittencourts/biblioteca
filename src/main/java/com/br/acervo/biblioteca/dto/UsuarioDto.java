@@ -23,7 +23,7 @@ public class UsuarioDto {
 
     private String email;
 
-    private LocalDateTime dataDeNascimento;
+    private LocalDateTime data;
 
     private List<LivroDto> livroDtoList = new ArrayList<>();
 
