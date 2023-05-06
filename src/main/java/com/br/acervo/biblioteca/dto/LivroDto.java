@@ -22,7 +22,7 @@ public class LivroDto {
 
     private String autor;
 
-    private LocalDateTime anoDeLancamento;
+    private String anoDeLancamento;
 
     private Status status;
 

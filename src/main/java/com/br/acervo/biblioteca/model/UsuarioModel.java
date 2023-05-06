@@ -23,12 +23,13 @@ public class UsuarioModel {
     @NotNull
     private String nome;
     @NotNull
+    @Column(unique = true)
     private String email;
     @NotNull
     private LocalDateTime data;
 
     @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "usuarioModel")
-    private List<LivroModel> livroModelList = new ArrayList<>();
+    private List<LivroModel> livros = new ArrayList<>();
 
 
 

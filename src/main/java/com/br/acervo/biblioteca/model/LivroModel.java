@@ -7,9 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
 
 @Entity
 @Table(name = "livro")
@@ -28,19 +25,16 @@ public class LivroModel {
     private String nome;
     @NotNull
     private String autor;
-    
+
     private String anoDeLancamento;
     @NotNull
     private Status status;
     @NotNull
-    private  Long quantidade;
-
+    private Long quantidade;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name = "usuario_id")
     private UsuarioModel usuarioModel;
-
-
-
 
 
 }

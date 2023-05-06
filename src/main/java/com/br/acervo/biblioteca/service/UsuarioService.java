@@ -1,6 +1,7 @@
 package com.br.acervo.biblioteca.service;
 
 import com.br.acervo.biblioteca.dto.UsuarioDto;
+import com.br.acervo.biblioteca.model.Status;
 import com.br.acervo.biblioteca.model.UsuarioModel;
 import com.br.acervo.biblioteca.repository.UsuarioRepositorio;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,10 @@ public class UsuarioService {
     }
 
     public UsuarioDto criacaoUsuario(UsuarioDto usuarioDto){
-        UsuarioModel criaUsuario = modelMapper.map(usuarioDto,UsuarioModel.class);
+        UsuarioModel criaUsuario = modelMapper.map(usuarioDto, UsuarioModel.class);
         criaUsuario.setData(LocalDateTime.now());
+        criaUsuario.getLivros().forEach(livro -> livro.setUsuarioModel(criaUsuario));
+        criaUsuario.getLivros().forEach(livro -> livro.setStatus(Status.NAO_RESERVADO));
         userRepositorio.save(criaUsuario);
         return modelMapper.map(criaUsuario,UsuarioDto.class);
     }
