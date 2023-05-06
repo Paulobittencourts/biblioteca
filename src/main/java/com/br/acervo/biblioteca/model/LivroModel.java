@@ -28,8 +28,8 @@ public class LivroModel {
     private String nome;
     @NotNull
     private String autor;
-    @NotNull
-    private LocalDateTime anoDeLancamento;
+    
+    private String anoDeLancamento;
     @NotNull
     private Status status;
     @NotNull

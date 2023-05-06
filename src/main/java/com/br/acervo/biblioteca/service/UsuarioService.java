@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -23,5 +24,12 @@ public class UsuarioService {
     public List<UsuarioDto> getUsuarios(){
         return userRepositorio.findAll().stream()
                 .map(user->modelMapper.map(user, UsuarioDto.class)).toList();
+    }
+
+    public UsuarioDto criacaoUsuario(UsuarioDto usuarioDto){
+        UsuarioModel criaUsuario = modelMapper.map(usuarioDto,UsuarioModel.class);
+        criaUsuario.setData(LocalDateTime.now());
+        userRepositorio.save(criaUsuario);
+        return modelMapper.map(criaUsuario,UsuarioDto.class);
     }
 }
