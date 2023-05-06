@@ -25,7 +25,7 @@ public class UsuarioModel {
     @NotNull
     private String email;
     @NotNull
-    private LocalDateTime dataDeNascimento;
+    private LocalDateTime data;
 
     @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "usuarioModel")
     private List<LivroModel> livroModelList = new ArrayList<>();
