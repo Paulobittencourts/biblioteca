@@ -1,6 +1,5 @@
 package com.br.acervo.biblioteca.dto;
 
-import com.br.acervo.biblioteca.model.LivroModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,5 +25,4 @@ public class UsuarioDto {
     private LocalDateTime data;
 
     private List<LivroDto> livros = new ArrayList<>();
-
 }
