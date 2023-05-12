@@ -28,6 +28,18 @@ public class UsuarioController {
         return ResponseEntity.ok(create);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus (HttpStatus.NO_CONTENT)
+    public void deleteUsuario (@PathVariable @Valid Long id){
+        userService.deleteUsuario(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UsuarioDto> update(@RequestBody @Valid UsuarioDto usuarioDto, @PathVariable @Valid Long id){
+        UsuarioDto updated = userService.updateUsuario(id, usuarioDto);
+        return ResponseEntity.ok(updated);
+    }
+
 
 }
 
