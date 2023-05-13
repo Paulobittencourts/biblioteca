@@ -25,4 +25,6 @@ public class UsuarioDto {
     private LocalDateTime data;
 
     private List<LivroDto> livros = new ArrayList<>();
+
+    private List<ReservaDto> reserva = new ArrayList<>();
 }
