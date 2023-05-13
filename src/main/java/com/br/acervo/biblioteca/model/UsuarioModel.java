@@ -31,6 +31,7 @@ public class UsuarioModel {
     @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "usuarioModel")
     private List<LivroModel> livros = new ArrayList<>();
 
-
+    @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "usuario")
+    private List<ReservaModel> reserva = new ArrayList<>();
 
 }
