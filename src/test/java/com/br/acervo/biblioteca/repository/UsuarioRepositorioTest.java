@@ -9,6 +9,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -31,6 +33,47 @@ class UsuarioRepositorioTest {
 
     }
 
+
+    @Test
+    public void removeUsuario(){
+        UsuarioModel usuarioCriado = criarUsuario();
+
+        UsuarioModel usuarioSalvo = usuarioRepositorio.save(usuarioCriado);
+        usuarioRepositorio.delete(usuarioSalvo);
+
+        Optional<UsuarioModel> byId = usuarioRepositorio.findById(usuarioSalvo.getId());
+
+        Assertions.assertThat(byId.isEmpty()).isTrue();
+    }
+
+    @Test
+    public void updateUsuario(){
+        UsuarioModel usuarioCriado = criarUsuario();
+
+        UsuarioModel usuarioSalvo = usuarioRepositorio.save(usuarioCriado);
+        usuarioSalvo.setNome("Talita");
+        usuarioSalvo.setEmail("talita@gmail.com");
+        usuarioSalvo.setData(LocalDateTime.now());
+
+        UsuarioModel usuarioUpdate = usuarioRepositorio.save(usuarioCriado);
+
+        Assertions.assertThat(usuarioUpdate.getNome()).isEqualTo(usuarioSalvo.getNome());
+        Assertions.assertThat(usuarioUpdate.getEmail()).isEqualTo(usuarioSalvo.getEmail());
+        Assertions.assertThat(usuarioUpdate.getData()).isEqualTo(usuarioSalvo.getData());
+        Assertions.assertThat(usuarioUpdate.getId()).isNotNull();
+        Assertions.assertThat(usuarioUpdate).isNotNull();
+
+
+
+    }
+
+    @Test
+    public void listarUsuario(){
+        List<UsuarioModel>listaUsuario = usuarioRepositorio.findAll();
+
+        Assertions.assertThat(listaUsuario).isNotNull();
+    }
+
     public UsuarioModel criarUsuario(){
         return UsuarioModel.builder()
                 .nome("Paulo")
@@ -40,6 +83,8 @@ class UsuarioRepositorioTest {
                 .reserva(new ArrayList<>())
                 .build();
     }
+
+
 
 
 }
