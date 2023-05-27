@@ -1,20 +1,20 @@
 package com.br.acervo.biblioteca.repository;
 
-import com.br.acervo.biblioteca.model.LivroModel;
-import com.br.acervo.biblioteca.model.ReservaModel;
-import com.br.acervo.biblioteca.model.Status;
-import com.br.acervo.biblioteca.model.UsuarioModel;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
+import com.br.acervo.biblioteca.model.LivroModel;
+import com.br.acervo.biblioteca.model.ReservaModel;
+import com.br.acervo.biblioteca.model.Status;
+import com.br.acervo.biblioteca.model.UsuarioModel;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class ReservaRepositorioTest {
@@ -77,6 +77,47 @@ class ReservaRepositorioTest {
         Assertions.assertThat(byId.isEmpty()).isTrue();
 
 
+
+    }
+
+    @Test
+    public void listarReserva(){
+
+        List<ReservaModel>listaReserva = reservaRepositorio.findAll();
+
+        Assertions.assertThat(listaReserva).isNotNull();
+
+    }
+
+    @Test
+    public void updateReserva(){
+        UsuarioModel usuarioCriado = criarUsuario();
+        UsuarioModel usuarioSalvo = usuarioRepositorio.save(usuarioCriado);
+
+        UsuarioModel usuarioCriado2 = criarUsuario();
+        UsuarioModel usuarioSalvo2 = usuarioRepositorio.save(usuarioCriado2);
+
+        LivroModel livroCriado = criarLivro();
+        livroCriado.setUsuarioModel(usuarioSalvo);
+        LivroModel livroSalvo = livroRepository.save(livroCriado);
+
+        LivroModel livroCriado2 = criarLivro();
+        livroCriado.setUsuarioModel(usuarioSalvo);
+        LivroModel livroSalvo2 = livroRepository.save(livroCriado2);
+
+        ReservaModel reserva = new ReservaModel();
+        reserva.setLivro(livroSalvo);
+        reserva.setUsuario(usuarioSalvo2);
+        reservaRepositorio.save(reserva);
+
+        reserva.setLivro(livroSalvo2);
+        reserva.setUsuario(usuarioSalvo2);
+        reservaRepositorio.save(reserva);
+
+        Assertions.assertThat(reserva.getLivro()).isEqualTo(livroSalvo2);
+        Assertions.assertThat(reserva.getUsuario()).isEqualTo(usuarioSalvo2);
+        Assertions.assertThat((reserva.getId())).isNotNull();
+        Assertions.assertThat(reserva).isNotNull();
 
     }
 
