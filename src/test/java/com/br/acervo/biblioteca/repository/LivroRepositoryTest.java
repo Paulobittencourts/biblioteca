@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,6 +57,42 @@ class LivroRepositoryTest {
         Optional<LivroModel> byId = livroRepository.findById(livroSalvo.getId());
 
         Assertions.assertThat(byId.isEmpty()).isTrue();
+    }
+
+    @Test
+    public void updateLivro(){
+        UsuarioModel usuarioCriado = criarUsuario();
+        UsuarioModel usuarioSalvo = usuarioRepositorio.save(usuarioCriado);
+
+        LivroModel livroCriado = criarLivro();
+        livroCriado.setUsuarioModel(usuarioSalvo);
+        LivroModel livroSalvo = livroRepository.save(livroCriado);
+
+        livroSalvo.setNome("Diario De Um Banana");
+        livroSalvo.setStatus(Status.NAO_RESERVADO);
+        livroSalvo.setAutor("Jeff Kinney");
+        livroSalvo.setQuantidade(6L);
+        livroSalvo.setAnoDeLancamento("2008");
+
+        LivroModel updateLivro  = livroRepository.save(livroCriado);
+
+        Assertions.assertThat(updateLivro.getNome()).isEqualTo(updateLivro.getNome());
+        Assertions.assertThat(updateLivro.getStatus()).isEqualTo(updateLivro.getStatus());
+        Assertions.assertThat(updateLivro.getAnoDeLancamento()).isEqualTo(updateLivro.getAnoDeLancamento());
+        Assertions.assertThat(updateLivro.getQuantidade()).isEqualTo(updateLivro.getQuantidade());
+        Assertions.assertThat(updateLivro.getAutor()).isEqualTo(updateLivro.getAutor());
+        Assertions.assertThat(updateLivro.getId()).isNotNull();
+        Assertions.assertThat(updateLivro).isNotNull();
+    }
+
+    @Test
+    public void listaLivro(){
+
+        List<LivroModel>listaLivro = livroRepository.findAll();
+
+        Assertions.assertThat(listaLivro).isNotNull();
+
+
     }
 
     public UsuarioModel criarUsuario(){
