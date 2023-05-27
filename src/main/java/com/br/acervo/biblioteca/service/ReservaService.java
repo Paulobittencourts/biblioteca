@@ -13,6 +13,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ReservaService {
@@ -43,4 +45,31 @@ public class ReservaService {
 
     }
 
+    public List<ReservaDto> getAllReservas() {
+        return reservaRepository.findAll()
+                .stream()
+                .map(reserva -> modelMapper.map(reserva, ReservaDto.class))
+                .toList();
+    }
+
+    public void deleteReserva(Long id) {
+        ReservaModel reserva = reservaRepository.findById(id)
+                .orElseThrow(EntityExistsException::new);
+        reservaRepository.delete(reserva);
+    }
+
+    public ReservaDto updatedReserva(Long id, String usuarioId, String livroId) {
+        ReservaModel updateReserva = reservaRepository.findById(id)
+                .orElseThrow(EntityExistsException::new);
+        UsuarioModel usuario = usuarioRepositorio.findById(Long.valueOf(usuarioId))
+                .orElseThrow(EntityExistsException::new);
+        LivroModel livro = livroRepository.findById(Long.parseLong(livroId))
+                .orElseThrow(EntityExistsException::new);
+
+        updateReserva.setUsuario(usuario);
+        updateReserva.setLivro(livro);
+        reservaRepository.save(updateReserva);
+
+        return modelMapper.map(updateReserva, ReservaDto.class);
+    }
 }
