@@ -101,9 +101,9 @@ class ReservaRepositorioTest {
         livroCriado.setUsuarioModel(usuarioSalvo);
         LivroModel livroSalvo = livroRepository.save(livroCriado);
 
-        LivroModel livroCriado2 = criarLivro();
+        
         livroCriado.setUsuarioModel(usuarioSalvo);
-        LivroModel livroSalvo2 = livroRepository.save(livroCriado2);
+        LivroModel livroSalvo2 = livroRepository.save(livroCriado);
 
         ReservaModel reserva = new ReservaModel();
         reserva.setLivro(livroSalvo);
@@ -145,6 +145,7 @@ class ReservaRepositorioTest {
                 .status(Status.NAO_RESERVADO)
                 .build();
     }
+
 
 }
 
