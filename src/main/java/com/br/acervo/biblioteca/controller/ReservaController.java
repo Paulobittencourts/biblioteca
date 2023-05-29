@@ -18,8 +18,8 @@ public class ReservaController {
     private ReservaService reservaService;
 
     @PostMapping("/{id}")
-    public ResponseEntity <ReservaDto> reservao(@PathVariable @Valid Long id, @RequestParam @Valid String reservaId){
-        ReservaDto reserva = reservaService.reservinha(id, reservaId);
+    public ResponseEntity <ReservaDto> reservao(@PathVariable @Valid Long id, @RequestParam @Valid String livroId){
+        ReservaDto reserva = reservaService.reservinha(id, livroId);
         return ResponseEntity.ok(reserva);
     }
     @GetMapping

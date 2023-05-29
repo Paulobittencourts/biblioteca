@@ -31,10 +31,10 @@ public class ReservaService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public ReservaDto reservinha(Long id, String reservaID) {
+    public ReservaDto reservinha(Long id, String livroId) {
         ReservaModel reservaModel = new ReservaModel();
         UsuarioModel usuarioModel = usuarioRepositorio.findById(id).orElseThrow(EntityExistsException::new);
-        LivroModel livroModel = livroRepository.findById(Long.parseLong(reservaID)).orElseThrow(EntityExistsException::new);
+        LivroModel livroModel = livroRepository.findById(Long.parseLong(livroId)).orElseThrow(EntityExistsException::new);
 
         reservaModel.setUsuario(usuarioModel);
         reservaModel.setLivro(livroModel);
